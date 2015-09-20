@@ -1,6 +1,8 @@
 package com.tripster.tripster;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -16,21 +18,26 @@ import java.net.URL;
  */
 public class ServletWriter {
 
-    private String servletUrl="http://18.189.54.108:8080/TripsterServlet/Servlet";
+    public static final String DEFAULT_SERVLET_URL ="http://18.189.54.108:8080/TripsterServlet/Servlet";
+    private String servletUrl;
+    private Context myAppContext;
     private String TAG = "SERVLET_WRITER";
 
     public ServletWriter(String servletUrl) {
         this.servletUrl = servletUrl;
     }
 
-    public void writeTrackingNumber(final String trackingNumber) {
+    public void writeTrackingNumber(final String trackingNumber,Context context) {
+        Toast.makeText(context, "Tracking Number: "+trackingNumber, Toast.LENGTH_LONG).show();
         String message = "FLIGHT_NUMBER=" + trackingNumber;
         writeToServlet(message);
+
     }
 
     public void writePhoneNumber(final String phoneNumber) {
         String message = "PHONE_NUMBER" + phoneNumber;
         writeToServlet(message);
+
     }
 
     private void writeToServlet(final String bufferedWriterMessage) {
@@ -43,6 +50,8 @@ public class ServletWriter {
                     servletConnection.setRequestMethod("POST");
                     servletConnection.setDoOutput(true); //not exactly sure what this does
                     servletConnection.setDoInput(true);
+                    servletConnection.getResponseMessage();
+                    Log.d(TAG, "connected? ");
 
 
                     /*

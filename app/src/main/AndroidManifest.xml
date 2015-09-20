@@ -21,6 +21,7 @@
             android:name=".ui.flight.FlightInProgressActivity"
             android:label="@string/title_activity_flight_in_progress" >
         </activity>
+
     </application>
 
 </manifest>

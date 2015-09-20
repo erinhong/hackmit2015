@@ -1,13 +1,18 @@
 package com.tripster.tripster.ui.finder;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 import com.tripster.tripster.R;
+import com.tripster.tripster.ServletWriter;
 
 public class TripFinderActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,5 +41,12 @@ public class TripFinderActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void submitTrip(View view) {
+        EditText trackingNumText = (EditText) findViewById(R.id.editText);
+        String trackingNumber = trackingNumText.getText().toString();
+        ServletWriter servletWriter = new ServletWriter(ServletWriter.DEFAULT_SERVLET_URL);
+        servletWriter.writeTrackingNumber(trackingNumber,this.getApplicationContext());
     }
 }
