@@ -7,8 +7,13 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 import org.apache.commons.codec.binary.Base64;
+
 import java.net.URLEncoder;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class test {
         
@@ -60,7 +65,7 @@ public class test {
               return sb.toString();
             }
 
-    public static String getInfo(String flightCode, int timeAndDate) throws Exception{
+    public static String getFlightID(String flightCode, int timeAndDate) throws Exception{
         
         final String USERNAME = "cjh18";
         final String API_KEY = "e42a74e4d862aca041fc9248d3cdb07192d9e4e3";       
@@ -102,12 +107,13 @@ public class test {
         String[] fxmlFlightID_paramVal = new String[] {flightCode, String.valueOf(timeAndDate)};
         String faFlightID = httpPost(fxmlFlightID_URL, USERNAME, API_KEY, fxmlFlightID_paramName, fxmlFlightID_paramVal);
         System.out.println(faFlightID);
+        return faFlightID;
         //-------------------------------------------------------------------------------------------------------------------------        
         //Get FlightInfoEx
-        String fxmlFlightInfoEx_URL = FXML_URL+"FlightInfoEx";
-        String[] fxmlFlightInfoEx_paramName = new String[] {"ident", "howMany", "offset"};
-        String[] fxmlFlightInfoEx_paramVal = new String[] {flightCode, "1", "0"};
-        String flightInfoExReturnVal = httpPost(fxmlFlightInfoEx_URL, USERNAME, API_KEY, fxmlFlightInfoEx_paramName, fxmlFlightInfoEx_paramVal);        
+//        String fxmlFlightInfoEx_URL = FXML_URL+"FlightInfoEx";
+//        String[] fxmlFlightInfoEx_paramName = new String[] {"ident", "howMany", "offset"};
+//        String[] fxmlFlightInfoEx_paramVal = new String[] {flightCode, "1", "0"};
+//        String flightInfoExReturnVal = httpPost(fxmlFlightInfoEx_URL, USERNAME, API_KEY, fxmlFlightInfoEx_paramName, fxmlFlightInfoEx_paramVal);        
 
         //-------------------------------------------------------------------------------------------------------------------------        
         //Get alerts
@@ -133,8 +139,32 @@ public class test {
         
     }
     
+    public static String getArrival(String query_param) {
+        final String USERNAME = "cjh18";
+        final String API_KEY = "e42a74e4d862aca041fc9248d3cdb07192d9e4e3";       
+        final String FXML_URL = "http://flightxml.flightaware.com/json/FlightXML2/SearchBirdseyeInFlight";
+        
+        try {
+			String result = httpPost(FXML_URL, USERNAME, API_KEY, new String[] {"query, howMany, offset"}, new String[] {query_param, "5", "0"});
+			JSONObject json = new JSONObject(result);
+			JSONArray birdsEye = json.getJSONObject("SearchBirdseyeInFlightResult").getJSONArray("aircraft");
+			for (int index = 0; index < birdsEye.length(); index++) {
+				JSONObject everyAircraft = (JSONObject) birdsEye.get(index);
+				System.out.println("arrival is" + everyAircraft.getInt("arrivalTime"));
+			}
+			
+        } catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return "boo";
+    }
+    
     public static void main(String[] args) throws Exception{        
-        String res = getInfo("IFL531", 1442728860);
+        String res = getFlightID("IFL531", 1442728860);
         System.out.println(res);
+        
+        String poop = getArrival("{ident=IFL531}");
+//        System.out.println(poop);
     }
 }
