@@ -21,14 +21,14 @@ public class ServletWriter {
     public static final String DEFAULT_SERVLET_URL ="http://18.189.54.108:8080/TripsterServlet/Servlet";
     private String servletUrl;
     private Context myAppContext;
-    private String TAG = "SERVLET_WRITER";
+    private static final String TAG = "SERVLET_WRITER";
 
     public ServletWriter(String servletUrl) {
         this.servletUrl = servletUrl;
     }
 
-    public void writeTrackingNumber(final String trackingNumber,Context context) {
-        Toast.makeText(context, "Tracking Number: "+trackingNumber, Toast.LENGTH_LONG).show();
+    public void writeTrackingNumber(final String trackingNumber) {
+        Log.d(TAG, "Tracking Number: "+trackingNumber);
         String message = "FLIGHT_NUMBER=" + trackingNumber;
         writeToServlet(message);
 

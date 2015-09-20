@@ -19,7 +19,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:text="Start Trip"
         android:id="@+id/button"
         android:onClick="submitTrip"
         android:layout_alignParentBottom="true"
@@ -29,10 +29,20 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/tracking_number"
+        android:hint="Tracking Number"
         android:layout_below="@+id/textView"
         android:layout_marginTop="44dp"
-        android:layout_alignEnd="@+id/button"
-        android:layout_alignStart="@+id/button" />
+        android:layout_alignStart="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/phone_number"
+        android:hint="Contact Phone Number"
+        android:layout_centerVertical="true"
+        android:layout_alignEnd="@+id/tracking_number"
+        android:layout_alignStart="@+id/tracking_number" />
 
 </RelativeLayout>
